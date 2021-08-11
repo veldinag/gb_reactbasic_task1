@@ -1,0 +1,10 @@
+.message {
+    background-color: white;
+    color: blue;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px;
+}
+.message span {
+    color: green;
+}
