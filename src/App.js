@@ -11,13 +11,17 @@ function App() {
   const [lastAuthor, setLastAuthor] = useState('');
   const isFirstMount = useRef(true);
 
-   useEffect(() => {
-     if (isFirstMount.current) {
-       isFirstMount.current = false;
-       return;
-     };
-     alert(lastAuthor + ', cпасибо за отзыв!');
-   }, [lastAuthor]);
+  async function showAlert(param) {
+    await setTimeout(() => {alert(param + ', cпасибо за отзыв!')}, 1500)
+  }
+
+  useEffect(() => {
+      if (isFirstMount.current) {
+        isFirstMount.current = false;
+        return;
+      };
+      showAlert(lastAuthor);
+    }, [lastAuthor]);
 
   const handleChangeAuthor = (event) => {
     setAuthor(event.target.value);
