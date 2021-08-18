@@ -1,6 +1,9 @@
 import './App.css';
-import { useState, useEffect, useRef  } from 'react'
-import MessageList from "./components/MessageList";
+import { useState } from 'react'
+import getDate from "./utils";
+import Message from "./components/Message";
+import { Container, Button, TextField } from '@material-ui/core'
+import 'typeface-roboto';
 
 function App() {
 
@@ -8,20 +11,6 @@ function App() {
   const [author, setAuthor] = useState('');
   const [text, setText] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const [lastAuthor, setLastAuthor] = useState('');
-  const isFirstMount = useRef(true);
-
-  async function showAlert(param) {
-    await setTimeout(() => {alert(param + ', cпасибо за отзыв!')}, 1500)
-  }
-
-  useEffect(() => {
-      if (isFirstMount.current) {
-        isFirstMount.current = false;
-        return;
-      };
-      showAlert(lastAuthor);
-    }, [lastAuthor]);
 
   const handleChangeAuthor = (event) => {
     setAuthor(event.target.value);
@@ -33,24 +22,7 @@ function App() {
 
   const handleClick = () => {
     if (author && text) {
-      setLastAuthor(author);
-      const item = {};
-      const msgList = messageList;
-      const currentDate = new Date();
-      const options = {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        timezone: 'UTC',
-        hour: 'numeric',
-        minute: 'numeric',
-      };
-      item.id = id;
-      item.author = author;
-      item.text = text;
-      item.date = currentDate.toLocaleString("ru", options);
-      msgList.push(item)
-      setMessageList(msgList);
+      setMessageList([...messageList, {id, author, text, date: getDate()}]);
       setId(id + 1);
       setAuthor('');
       setText('');
@@ -59,16 +31,18 @@ function App() {
 
   return (
     <>
-      <div className='input-form'>
-        <h2>Оставь свой отзыв</h2>
-          <input type='text' placeholder='Ваше имя' value={author} onChange={handleChangeAuthor}/>
-          <textarea placeholder='Ваше сообщение' value={text} onChange={handleChangeText}/>
-          <button onClick={handleClick}>Отправить</button>
-      </div>
+      <Container maxWidth="sm">
+        <h3>ОСТАВЬ СООБЩЕНИЕ</h3>
+          <TextField variant="outlined" size="small" label="Ваше имя"
+                     value={author} onChange={handleChangeAuthor} />
+          <TextField variant="outlined" size="small" multiline rows="4" label="Ваше сообщение"
+                     value={text} onChange={handleChangeText} />
+          <Button variant="contained" onClick={handleClick}>Отправить</Button>
+      </Container>
 
       <div className='wrapper'>
         <hr />
-        <MessageList msgList={messageList}/>
+        {messageList.map((message) => <Message msg={message} key={message.id}/>)}
       </div>
     </>
   );
