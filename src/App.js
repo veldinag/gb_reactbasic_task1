@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect, useRef  } from 'react'
 import MessageList from "./components/MessageList";
+import getDate from "./utils";
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
   const isFirstMount = useRef(true);
 
   async function showAlert(param) {
-    await setTimeout(() => {alert(param + ', cпасибо за отзыв!')}, 1500)
+    await setTimeout(() => {alert(param + ', cпасибо за отзыв!')}, 1500);
   }
 
   useEffect(() => {
@@ -34,23 +35,7 @@ function App() {
   const handleClick = () => {
     if (author && text) {
       setLastAuthor(author);
-      const item = {};
-      const msgList = messageList;
-      const currentDate = new Date();
-      const options = {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        timezone: 'UTC',
-        hour: 'numeric',
-        minute: 'numeric',
-      };
-      item.id = id;
-      item.author = author;
-      item.text = text;
-      item.date = currentDate.toLocaleString("ru", options);
-      msgList.push(item)
-      setMessageList(msgList);
+      setMessageList([...messageList, {id, author, text, date: getDate() }]);
       setId(id + 1);
       setAuthor('');
       setText('');
