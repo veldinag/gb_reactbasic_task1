@@ -1,32 +1,61 @@
 import './App.css';
-import Message from './Message';
-import Counter from './components/counter/Counter';
-import CounterClass from './components/counter-class/CounterClass'
-import Form from './components/form/Form'
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useRef  } from 'react'
+import MessageList from "./components/MessageList";
+import getDate from "./utils";
 
-function App(props) {
+function App() {
 
-  const text = `Текст, переданный в компонент "Message"!`
+  const [id, setId] = useState(1);
+  const [author, setAuthor] = useState('');
+  const [text, setText] = useState('');
+  const [messageList, setMessageList] = useState([]);
+  const [lastAuthor, setLastAuthor] = useState('');
+  const isFirstMount = useRef(true);
 
-  const [name, setName] = useState("");
+  async function showAlert(param) {
+    await setTimeout(() => {alert(param + ', cпасибо за отзыв!')}, 1500);
+  }
 
-  const handleChange = useCallback((e) => {
-    setName(e.target.value)
-}, []);
+  useEffect(() => {
+      if (isFirstMount.current) {
+        isFirstMount.current = false;
+        return;
+      };
+      showAlert(lastAuthor);
+    }, [lastAuthor]);
 
+  const handleChangeAuthor = (event) => {
+    setAuthor(event.target.value);
+  };
+
+  const handleChangeText = (event) => {
+    setText(event.target.value);
+  };
+
+  const handleClick = () => {
+    if (author && text) {
+      setLastAuthor(author);
+      setMessageList([...messageList, {id, author, text, date: getDate() }]);
+      setId(id + 1);
+      setAuthor('');
+      setText('');
+    }
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        My First React App
-        <h3>Hello {props.name}</h3>
-        <Message message={text} />
-        <Counter />
-        <CounterClass />
-        <Form name={name} handleChange={handleChange}/>
-      </header>
-    </div>
+    <>
+      <div className='input-form'>
+        <h2>Оставь свой отзыв</h2>
+          <input type='text' placeholder='Ваше имя' value={author} onChange={handleChangeAuthor}/>
+          <textarea placeholder='Ваше сообщение' value={text} onChange={handleChangeText}/>
+          <button onClick={handleClick}>Отправить</button>
+      </div>
+
+      <div className='wrapper'>
+        <hr />
+        <MessageList msgList={messageList}/>
+      </div>
+    </>
   );
 }
 
