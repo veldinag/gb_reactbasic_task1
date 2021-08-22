@@ -1,5 +1,5 @@
 import './App.css'
-import {useState} from 'react'
+import {useState, useRef} from 'react'
 import getDate from "./utils"
 import Message from "./components/Message"
 import {Container, Button, TextField, Grid, Paper, makeStyles, List, ListItem} from '@material-ui/core'
@@ -41,6 +41,7 @@ function App() {
         {id: 4, name: "Elena"},
         {id: 5, name: "Alex"}
     ])
+    const refInput = useRef(null)
 
     const classes = useStyles()
 
@@ -58,6 +59,7 @@ function App() {
             setId(id + 1)
             setAuthor('')
             setText('')
+            refInput.current.focus()
         }
     }
 
@@ -85,7 +87,7 @@ function App() {
                                        value={author} onChange={handleChangeAuthor}/>
                         </Grid>
                         <Grid item xs>
-                            <TextField fullWidth variant="outlined" size="small" multiline label="Ваше сообщение"
+                            <TextField inputRef={refInput} fullWidth variant="outlined" size="small" multiline label="Ваше сообщение"
                                        value={text} autoFocus onChange={handleChangeText}/>
                         </Grid>
                         <Grid item xs={2}>
