@@ -1,22 +1,27 @@
-import './App.css';
+import './App.css'
 import {useState} from 'react'
-import getDate from "./utils";
-import Message from "./components/Message";
-import {Container, Button, TextField, Typography, Grid, Paper, makeStyles} from '@material-ui/core'
-import SendIcon from '@material-ui/icons/Send';
-import 'typeface-roboto';
+import getDate from "./utils"
+import Message from "./components/Message"
+import {Container, Button, TextField, Grid, Paper, makeStyles, List, ListItem} from '@material-ui/core'
+import SendIcon from '@material-ui/icons/Send'
+import 'typeface-roboto'
 
 const useStyles = makeStyles((theme) => ({
     chatsList: {
-        padding: theme.spacing(1),
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
         height: 500,
     },
     chat: {
         padding: theme.spacing(1),
-        height: 500
+        height: 500,
+        overflow: "scroll"
     },
     sendForm: {
         marginTop: theme.spacing(1)
+    },
+    sendBtn: {
+        height: 100
     },
     sendIcon: {
         marginLeft: 10
@@ -25,41 +30,53 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
 
-    const [id, setId] = useState(1);
-    const [author, setAuthor] = useState('');
-    const [text, setText] = useState('');
-    const [messageList, setMessageList] = useState([]);
+    const [id, setId] = useState(1)
+    const [author, setAuthor] = useState('')
+    const [text, setText] = useState('')
+    const [messageList, setMessageList] = useState([])
+    const [chatsList, setChatsList] = useState([
+        {id: 1, name: "Ivan"},
+        {id: 2, name: "Jhon"},
+        {id: 3, name: "Mark"},
+        {id: 4, name: "Elena"},
+        {id: 5, name: "Alex"}
+    ])
+
+    const classes = useStyles()
 
     const handleChangeAuthor = (event) => {
         setAuthor(event.target.value);
     };
 
     const handleChangeText = (event) => {
-        setText(event.target.value);
+        setText(event.target.value)
     };
 
     const handleClick = () => {
         if (author && text) {
-            setMessageList([...messageList, {id, author, text, date: getDate()}]);
-            setId(id + 1);
-            setAuthor('');
-            setText('');
+            setMessageList([...messageList, {id, author, text, date: getDate()}])
+            setId(id + 1)
+            setAuthor('')
+            setText('')
         }
     }
-
-    const classes = useStyles()
 
     return (
         <Container maxWidth="md">
             <Grid container spacing={1}>
                 <Grid item md={3}>
-                    <Paper className={classes.chatsList}>Peoples</Paper>
+                    <Paper variant="outlined" className={classes.chatsList}>
+                        <List component="nav">
+                            {chatsList.map(chatItem => <ListItem button key={chatItem.id}>{chatItem.name}</ListItem>)}
+                        </List>
+                    </Paper>
                 </Grid>
                 <Grid item md={9}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Paper className={classes.chat}>{messageList.map((message) => <Message msg={message}
-                                                                                                   key={message.id}/>)}</Paper>
+                            <Paper variant="outlined" className={classes.chat}>
+                                {messageList.map((message) => <Message msg={message} key={message.id}/>)}
+                            </Paper>
                         </Grid>
                     </Grid>
                     <Grid className={classes.sendForm} container justifyContent="center" spacing={1}>
@@ -72,7 +89,8 @@ function App() {
                                        value={text} autoFocus onChange={handleChangeText}/>
                         </Grid>
                         <Grid item xs={2}>
-                            <Button  fullWidth variant="outlined" onClick={handleClick}>SEND<SendIcon
+                            <Button className="classes.sendBtn" fullWidth variant="outlined"
+                                    onClick={handleClick}>SEND<SendIcon
                                 className={classes.sendIcon} fontSize="small"/></Button>
                         </Grid>
                     </Grid>
