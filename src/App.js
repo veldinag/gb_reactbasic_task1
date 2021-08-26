@@ -3,9 +3,10 @@ import React from "react"
 import 'typeface-roboto'
 import Chats from "./components/Chats"
 import {Container, makeStyles, Paper, Tab, Tabs} from "@material-ui/core";
-import {BrowserRouter, Link, Route} from "react-router-dom";
+import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
+import NotFound from "./components/NotFound";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,12 +40,15 @@ function App() {
                         <Tab label="Profile" to="/profile" component={Link}/>
                     </Tabs>
                 </Paper>
-                <Route exact path="/"><div><Home /></div></Route>
-                <Route path="/chats"><Chats/></Route>
-                <Route path="/profile"><div><Profile /></div></Route>
+                <Switch>
+                    <Route exact path="/"><Home/></Route>
+                    <Route path="/chats/:chatId?"><Chats/></Route>
+                    <Route path="/profile"><Profile/></Route>
+                    <Route path="*"><NotFound /></Route>
+                </Switch>
             </ Container>
         </BrowserRouter>
-)
+    )
 }
 
 export default App;

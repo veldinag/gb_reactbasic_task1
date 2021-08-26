@@ -1,81 +1,119 @@
-import {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
+import {Link, Redirect, useParams} from "react-router-dom";
+import {Button, TextField, Grid, Paper, List, ListItem, ListItemText} from '@material-ui/core'
+import SendIcon from '@material-ui/icons/Send'
 import getDate from "../../utils"
 import Message from "../Message"
-import {Button, TextField, Grid, Paper, makeStyles, List, ListItem} from '@material-ui/core'
-import SendIcon from '@material-ui/icons/Send'
-import {Link} from "react-router-dom";
+import DB from "../../DB/DB"
+import {useStyles} from "./style";
 
-const useStyles = makeStyles((theme) => ({
-    chatsList: {
-        paddingTop: theme.spacing(1),
-        paddingBottom: theme.spacing(1),
-        height: 500,
-    },
-    chat: {
-        padding: theme.spacing(1),
-        height: 500,
-        overflow: "scroll"
-    },
-    sendForm: {
-        marginTop: theme.spacing(1)
-    },
-    sendBtn: {
-        height: 100
-    },
-    sendIcon: {
-        marginLeft: 10
-    }
-}))
 
 function Chats() {
 
-    const [id, setId] = useState(1)
-    const [author, setAuthor] = useState('')
-    const [text, setText] = useState('')
-    const [messageList, setMessageList] = useState([])
-    const [chatsList, setChatsList] = useState([
-        {id: 1, name: "Ivan"},
-        {id: 2, name: "Jhon"},
-        {id: 3, name: "Mark"},
-        {id: 4, name: "Elena"},
-        {id: 5, name: "Alex"}
-    ])
+    const {chatId} = useParams()
+    const currId = parseInt(chatId)
+    const [chats, setChats] = useState(DB)
     const refInput = useRef(null)
-
+    const [text, setText] = useState('')
     const classes = useStyles()
 
-    const handleChangeAuthor = (event) => {
-        setAuthor(event.target.value);
-    };
+    const currentChat = (id) => {
+        let current = []
+        if (id && (id <= chats.length)) {
+            current = chats.find(item => item.id === id).messages
+        }
+        return current
+    }
+
+    const [messageList, setMessageList] = useState(currentChat(currId))
+
+    useEffect(() => {
+        if (currId && (currId <= chats.length)) {
+            refInput.current.focus()
+            setMessageList(currentChat(currId))
+
+        }
+    }, [currId, currentChat])
+
 
     const handleChangeText = (event) => {
         setText(event.target.value)
     };
 
     const handleClick = () => {
-        if (author && text) {
-            setMessageList([...messageList, {id, author, text, date: getDate()}])
-            setId(id + 1)
-            setAuthor('')
+        if (text) {
+            const newMessage = {}
+            newMessage.id = messageList.length + 1
+            newMessage.type = 'fromMe'
+            newMessage.text = text
+            newMessage.date = getDate()[0] + ", " + getDate()[1]
+            const newMessageList = messageList
+            newMessageList.push(newMessage)
+            setMessageList(newMessageList)
+            const newChats = chats
+            newChats.map(item => {
+                if (item.id === currId) {
+                    item.messages = messageList
+                }
+            })
+            setChats(newChats)
             setText('')
             refInput.current.focus()
+
+        }
+    }
+
+    const Chat = () => {
+        if((!currId && chats.length) || (currId > chats.length) ) {
+            return <Redirect to="/chats/1" />
+        }
+    }
+
+    const SendForm = () => {
+        if (currId && (currId <= chats.length)) {
+            return (
+                <Grid className={classes.sendForm} container justifyContent="center" spacing={1}>
+                    <Grid item xs>
+                        <TextField inputRef={refInput}
+                                   fullWidth
+                                   variant="outlined"
+                                   size="small"
+                                   label="Your message"
+                                   value={text}
+                                   onChange={handleChangeText}/>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button className="classes.sendBtn"
+                                fullWidth
+                                variant="outlined"
+                                onClick={handleClick}>SEND
+                            <SendIcon
+                                className={classes.sendIcon}
+                                fontSize="small"/>
+                        </Button>
+                    </Grid>
+                </Grid>
+            )
         }
     }
 
     return (
         <>
+            {Chat()}
             <Grid container spacing={1}>
                 <Grid item md={3}>
                     <Paper variant="outlined" className={classes.chatsList}>
                         <List component="nav">
-                            {chatsList.map(chatItem =>
+                            {chats.map(chatItem => (
                                 <ListItem
                                     button
+                                    to={"/chats/" + chatItem.id.toString()}
+                                    component={Link}
                                     key={chatItem.id}
-                                    to={"chats/" + chatItem.id}
-                                    component={Link}>
-                                    {chatItem.name}
-                                </ListItem>)}
+                                    selected={(currId === chatItem.id)}>
+                                    <ListItemText>{chatItem.name}</ListItemText>
+                                </ListItem>
+                            ))}
                         </List>
                     </Paper>
                 </Grid>
@@ -87,35 +125,7 @@ function Chats() {
                             </Paper>
                         </Grid>
                     </Grid>
-                    <Grid className={classes.sendForm} container justifyContent="center" spacing={1}>
-                        <Grid item xs={3}>
-                            <TextField variant="outlined"
-                                       size="small"
-                                       label="Your name"
-                                       value={author}
-                                       onChange={handleChangeAuthor}/>
-                        </Grid>
-                        <Grid item xs>
-                            <TextField inputRef={refInput}
-                                       fullWidth
-                                       variant="outlined"
-                                       size="small"
-                                       label="Your message"
-                                       value={text}
-                                       autoFocus
-                                       onChange={handleChangeText}/>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Button className="classes.sendBtn"
-                                    fullWidth
-                                    variant="outlined"
-                                    onClick={handleClick}>SEND
-                                <SendIcon
-                                    className={classes.sendIcon}
-                                    fontSize="small"/>
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    {SendForm()}
                 </Grid>
             </Grid>
         </>);

@@ -1,14 +1,21 @@
 let getDate = () => {
     const currentDate = new Date();
-    const options = {
+    let dateString = []
+    const dateOptions = {
         year: 'numeric',
         month: 'numeric',
-        day: 'numeric',
+        day: 'numeric'
+
+    }
+    const timeOptions = {
         timezone: 'UTC',
         hour: 'numeric',
-        minute: 'numeric',
-    };
-   return currentDate.toLocaleString("ru", options);
+        minute: 'numeric'
+    }
+
+    dateString.push(currentDate.toLocaleString("ru", dateOptions))
+    dateString.push(currentDate.toLocaleString("ru", timeOptions))
+    return dateString;
 }
 
 export default getDate;
