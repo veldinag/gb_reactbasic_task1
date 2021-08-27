@@ -27,7 +27,7 @@ const DB = [
             { id: 2, type: 'toMe', text: `I wana to meet you!`, date: `17.08.2021, 10:15` },
             { id: 3, type: 'toMe', text: `I need your help)))`, date: `17.08.2021, 10:16`},
             { id: 4, type: 'fromMe', text: `Hello, Maria!`, date: `17.08.2021, 10:21`},
-            { id: 5, type: 'fromMe', text: `What happened`, date: `17.08.2021, 10:21`},
+            { id: 5, type: 'fromMe', text: `What happened?`, date: `17.08.2021, 10:21`},
         ]
     }
 ]
