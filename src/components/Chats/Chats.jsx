@@ -1,9 +1,11 @@
 import React, {useState, useRef, useEffect} from 'react'
-import {Link, Redirect, useParams} from "react-router-dom"
-import {Button, TextField, Grid, Paper,
-        List, ListItem, ListItemText,
-        Dialog, DialogTitle, DialogContent,
-        DialogContentText, DialogActions} from '@material-ui/core'
+import {Link, useParams} from "react-router-dom"
+import {
+    Button, TextField, Grid, Paper,
+    List, ListItem, ListItemText,
+    Dialog, DialogTitle, DialogContent,
+    DialogContentText, DialogActions
+} from '@material-ui/core'
 import IconButton from "@material-ui/core/IconButton"
 import {AddCircle, RemoveCircle} from "@material-ui/icons"
 import Icon from "@material-ui/core/Icon"
@@ -26,20 +28,14 @@ function Chats() {
         (chats.findIndex(el => el.id === parseInt(chatIdStr)) === -1))
         ? 1 : parseInt(chatIdStr)
 
-    const currentChat = (id) => {
-        if (!chats) {
-            return {}
-        } else {
-            const index = chats.findIndex(el => el.id === id)
-            if (index !== -1) {
-                return chats[index]
-            }
+    const currentChatMessages = (id) => {
+        const index = chats.findIndex(el => el.id === id)
+        if (index !== -1) {
+            return chats[index].messages
         }
     }
 
-    const [chat, setChat] = useState(currentChat(chatId))
-
-    const [messages, setMessages] = useState(chat.messages)
+    const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
 
     const [openAdd, setOpenAdd] = useState(false);
@@ -49,9 +45,7 @@ function Chats() {
 
     useEffect(() => {
         textInput.current.focus()
-        setChat(currentChat(chatId))
-        setMessages(chat.messages)
-
+        setMessages(currentChatMessages(chatId))
     }, [chatId])
 
 
@@ -101,11 +95,9 @@ function Chats() {
         const textFieldName = nameInput.current
         const newChat = {}
         let findId = 0
-        let isFind = 0
         do {
             findId++
-            isFind = chats.findIndex(item => item.id === findId)
-        } while (isFind !== -1)
+        } while (chats.findIndex(item => item.id === findId) !== -1)
         newChat.id = findId
         newChat.name = textFieldName.value
         newChat.messages = []
@@ -121,12 +113,6 @@ function Chats() {
         newChats.splice(index, 1)
         setChats(newChats)
         handleCloseRemove()
-    }
-
-    const Chat = () => {
-        //if ((!chatId && chats.length) || (chatId > chats.length)) {
-        return <Redirect to="/chats/1"/>
-        //}
     }
 
     const SendForm = () => {
@@ -158,7 +144,6 @@ function Chats() {
 
     return (
         <>
-            {Chat()}
             <Grid container spacing={1}>
                 <Grid item xs={3}>
                     <Paper variant="outlined" className={classes.chatsList}>
@@ -224,7 +209,7 @@ function Chats() {
                                     <DialogTitle>Delete chat</DialogTitle>
                                     <DialogContent>
                                         <DialogContentText>
-                                            Are you sure you want to delete the chat with name
+                                            Are you sure you want to delete the chat with {chats.find(el => el.id === chatId).name}
                                         </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
