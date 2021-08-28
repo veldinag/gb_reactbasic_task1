@@ -42,7 +42,7 @@ function App() {
                 </Paper>
                 <Switch>
                     <Route exact path="/"><Home/></Route>
-                    <Route path="/chats/:chatId?"><Chats/></Route>
+                    <Route path="/chats/:chatIdStr?"><Chats/></Route>
                     <Route path="/profile"><Profile/></Route>
                     <Route path="*"><NotFound /></Route>
                 </Switch>
