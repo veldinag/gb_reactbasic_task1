@@ -1,23 +1,34 @@
-import React from "react";
-import {makeStyles, Paper, Typography} from "@material-ui/core";
+import React, { useCallback } from "react";
+import { FormControlLabel, FormGroup, Paper, Switch, Typography } from "@material-ui/core";
+import useStyles from "./style";
 
-const useStyles = makeStyles({
-    root: {
-        width: '100%',
-        height: 600,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-});
+import { changeProfileCheckbox } from "../../store/profile/actions"
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Profile = () => {
-
     const classes = useStyles();
+    const { isChecked, message } = useSelector((state) => state)
+    const dispatch = useDispatch()
+    const setCheckbox = useCallback(() => {
+        dispatch(changeProfileCheckbox)
+    }, [dispatch])
 
     return (
         <Paper className={classes.root}>
-            <Typography variant="h1">Profile page</Typography>
+            <Typography variant="h1" className={classes.heading}>Profile page</Typography>
+            <FormGroup row>
+                <FormControlLabel className={classes.switchBox} control={
+                    <Switch
+                        checked={isChecked}
+                        onChange={setCheckbox}
+                        name="checkbox"
+                        color="primary"
+                        />
+                } label="Show message"
+                />
+            </FormGroup>
+            {isChecked && <Typography variant="h4">{message}</Typography>}
         </Paper>
     )
 }
