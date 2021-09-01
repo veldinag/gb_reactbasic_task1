@@ -12,9 +12,9 @@ const useStyles = makeStyles((theme) => ({
     heading: {
         marginTop: theme.spacing(22),
     },
-    switchBox: {
-        marginTop: theme.spacing(4),
-        marginBottom: theme.spacing(4)
+    inputForm: {
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(2)
     }
 }))
 

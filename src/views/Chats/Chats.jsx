@@ -11,7 +11,7 @@ import {AddCircle, RemoveCircle} from "@material-ui/icons"
 import Icon from "@material-ui/core/Icon"
 
 import getDate from "../../utils"
-import Message from "../Message"
+import Message from "../../components/Message"
 import DB from "../../DB/DB"
 import {useStyles} from "./style"
 
@@ -55,14 +55,13 @@ function Chats() {
 
     const handleClick = () => {
         if (message) {
-            const newMessage = {}
-            newMessage.id = messages.length + 1
-            newMessage.type = 'fromMe'
-            newMessage.text = message
-            newMessage.date = getDate()[0] + ", " + getDate()[1]
-            const newMessages = messages
-            newMessages.push(newMessage)
-            setMessages(newMessages)
+            const newMessage = {
+                id: messages.length + 1,
+                type: "fromMe",
+                text: message,
+                date: getDate()[0] + ", " + getDate()[1]
+            }
+            setMessages([...messages, newMessage])
             const newChats = chats
             newChats.map(item => {
                 if (item.id === chatId) {

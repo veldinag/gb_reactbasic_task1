@@ -1,5 +1,6 @@
-import {CHANGE_PROFILE_CHECKBOX} from "./constants"
+import {CHANGE_NAME} from "./constants"
 
-export const changeProfileCheckbox = {
-    type: CHANGE_PROFILE_CHECKBOX
-}
+export const changeName = (newName) => ({
+    type: CHANGE_NAME,
+    payload: newName
+})

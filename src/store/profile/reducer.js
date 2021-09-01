@@ -1,16 +1,15 @@
-import { CHANGE_PROFILE_CHECKBOX } from "./constants";
+import { CHANGE_NAME } from "./constants";
 
 const initialState = {
-    isChecked: false,
-    message: "Switch is checked"
+    name: ""
 }
 
 export const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CHANGE_PROFILE_CHECKBOX:
+        case CHANGE_NAME:
             return {
                 ...state,
-                isChecked: !state.isChecked
+                name: action.payload
             }
         default:
             return state
