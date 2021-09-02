@@ -42,6 +42,7 @@ const MessageSendForm = ({chatId}) => {
           <Grid item>
             <Button variant="contained"
                     size="medium"
+                    disabled={!message}
                     endIcon={<Icon>send</Icon>}
                     onClick={handleClick}>SEND
             </Button>

@@ -2,10 +2,7 @@ import {ADD_CHAT, REMOVE_CHAT} from "./constants"
 
 const initialState = {
   chatList: [
-    { id: "id001", name: "Alex" },
-    { id: "id002", name: "Mark" },
-    { id: "id003", name: "Anna" },
-    { id: "id004", name: "Stefan" },
+
   ],
 }
 

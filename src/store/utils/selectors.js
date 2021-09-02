@@ -1,0 +1,1 @@
+export const currentChatIdSelector = (store) => store.utils.settings.currentChatId

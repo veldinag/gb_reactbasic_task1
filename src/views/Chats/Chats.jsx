@@ -1,12 +1,11 @@
 import React from 'react'
 import {useParams} from "react-router-dom"
 import {Grid, Paper} from '@material-ui/core'
-
 import MessageSendForm from "../../components/MessageSendForm";
 import ChatsList from "../../components/ChatsList";
-
 import {useStyles} from "./style"
 import AddRemoveForm from "../../components/AddRemoveForm";
+import ChatsRedirect from "../../components/ChatsRedirect";
 
 function Chats() {
 
