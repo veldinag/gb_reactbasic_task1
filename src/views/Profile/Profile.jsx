@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useRef, useEffect} from "react";
+import React, {useState, useCallback, useRef } from "react";
 import {Button, Grid, Paper, TextField, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 
