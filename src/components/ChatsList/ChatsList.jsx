@@ -1,11 +1,14 @@
-import React from "react"
+import React, {useCallback} from "react"
 import {Link} from "react-router-dom"
 import {List, ListItem, ListItemText} from "@material-ui/core"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {chatsSelector} from "../../store/chats/selectors";
+import {changeLastChatId} from "../../store/chats/actions";
 
 const ChatsList = ({ chatId }) => {
   const chats = useSelector(chatsSelector)
+  const dispatch = useDispatch()
+
   if (chats.length === 0) {
     return (
       <List>
@@ -20,6 +23,7 @@ const ChatsList = ({ chatId }) => {
         {chats.map(chatItem => (
           <ListItem
             button
+            onClick={() => dispatch(changeLastChatId(chatItem.id))}
             to={"/chats/" + chatItem.id.toString()}
             component={Link}
             key={chatItem.id}

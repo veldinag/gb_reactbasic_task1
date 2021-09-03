@@ -1,26 +1,18 @@
-import {makeStyles, Paper, Typography} from "@material-ui/core"
+import {Paper, Typography} from "@material-ui/core"
 import './Message.css'
+import useStyles from "./style"
 
-const useStyles = makeStyles((theme) => ({
-    msgBox: {
-        padding: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-        minWidth: "200px",
-        backgroundColor: theme.palette.background.default
-    }
-}))
-
-const Message = (props) => {
+const Message = ({date, message}) => {
     const classes = useStyles()
 
     return (
-        <div className={props.msg.type}>
+        <div className="fromMe">
             <Paper className={classes.msgBox}>
-                <Typography display="block" variant="caption" color="secondary">{props.msg.date}</Typography>
-                <Typography display="block" variant="body1" align="center">{props.msg.text}</Typography>
+                <Typography display="block" variant="caption" color="secondary">{date}</Typography>
+                <Typography display="block" variant="body1" align="center">{message}</Typography>
             </Paper>
         </div>
     )
 }
 
-export default Message;
+export default Message

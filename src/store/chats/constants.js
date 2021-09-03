@@ -1,2 +1,3 @@
 export const ADD_CHAT = "CHATS::ADD_CHAT"
 export const REMOVE_CHAT = "CHATS::REMOVE_CHAT"
+export const CHANGE_LAST_CHAT_ID = "CHATS::CHANGE_LAST_CHAT_ID"

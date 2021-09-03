@@ -1,11 +1,11 @@
 import React from 'react'
 import {useParams} from "react-router-dom"
 import {Grid, Paper} from '@material-ui/core'
-import MessageSendForm from "../../components/MessageSendForm";
-import ChatsList from "../../components/ChatsList";
+import MessageSendForm from "../../components/MessageSendForm"
+import ChatsList from "../../components/ChatsList"
 import {useStyles} from "./style"
-import AddRemoveForm from "../../components/AddRemoveForm";
-import ChatsRedirect from "../../components/ChatsRedirect";
+import AddRemoveForm from "../../components/AddRemoveForm"
+import MessageList from "../../components/MessageList"
 
 function Chats() {
 
@@ -22,7 +22,7 @@ function Chats() {
         </Grid>
         <Grid item xs={9}>
           <Paper variant="outlined" className={classes.chat}>
-
+            <MessageList chatId={chatId}/>
           </Paper>
         </Grid>
         <Grid item xs={3}>
@@ -30,7 +30,8 @@ function Chats() {
         </Grid>
         <MessageSendForm chatId={chatId}/>
       </Grid>
-    </>)
+    </>
+  )
 }
 
 export default Chats;

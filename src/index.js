@@ -1,13 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Provider} from "react-redux"
+import reportWebVitals from './reportWebVitals'
 //import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'typeface-roboto';
+import {store} from "./store"
+import App from './App'
+import 'typeface-roboto'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
