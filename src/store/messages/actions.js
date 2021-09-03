@@ -1,7 +1,12 @@
-import {ADD_MESSAGE} from "./constants"
+import {ADD_MESSAGE, REMOVE_MESSAGES} from "./constants"
 
-export const addMessage = (chatId, message, date) => ({
+export const addMessage = (chatId, message) => ({
   type: ADD_MESSAGE,
   chatId,
   message,
+})
+
+export const removeMessages = (chatId) => ({
+  type: REMOVE_MESSAGES,
+  chatId,
 })

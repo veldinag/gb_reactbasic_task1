@@ -1,15 +1,7 @@
-import React from "react";
-import {makeStyles, Paper, Typography} from "@material-ui/core";
+import React from "react"
+import {Paper, Typography} from "@material-ui/core"
+import useStyles from "./style"
 
-const useStyles = makeStyles({
-    root: {
-        width: '100%',
-        height: 600,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-});
 
 const Home = () => {
 

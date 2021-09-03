@@ -1,2 +1,2 @@
-export const chatsSelector = (store) => store.chats.chatList
-export const lastChatIdSelector = (store) => store.chats.lastChatId
+export const chatsSelector = (state) => state.chats.chatList
+export const lastChatIdSelector = (state) => state.chats.lastChatId

@@ -5,6 +5,7 @@ import {RemoveCircle} from "@material-ui/icons"
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core"
 import {chatsSelector} from "../../store/chats/selectors"
 import {removeChat} from "../../store/chats/actions"
+import {removeMessages} from "../../store/messages/actions";
 
 
 const RemoveChatButton = ({chatId}) => {
@@ -26,6 +27,7 @@ const RemoveChatButton = ({chatId}) => {
 
     const handleRemoveChat = useCallback(() => {
         dispatch(removeChat(chatId))
+        dispatch(removeMessages(chatId))
         handleClose()
     }, [dispatch, chatId])
 
