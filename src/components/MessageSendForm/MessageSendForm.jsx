@@ -2,12 +2,13 @@ import {Button, Grid, TextField} from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useDispatch} from "react-redux";
-import {addMessage} from "../../store/messages/actions";
+import {addMessageFromRobot} from "../../store/messages/actions";
 
 const MessageSendForm = ({chatId}) => {
   const textInput = useRef(null)
   const [message, setMessage] = useState("")
   const dispatch = useDispatch()
+  const setStyle = "fromMe"
 
   const handleChangeText = (event) => {
     setMessage(event.target.value)
@@ -17,13 +18,13 @@ const MessageSendForm = ({chatId}) => {
     if (chatId) {
       textInput.current.focus()
     }
-  }, [])
+  }, [chatId])
 
   const handleClick = useCallback(() => {
-    dispatch(addMessage(chatId, message))
+    dispatch(addMessageFromRobot(chatId, message, setStyle))
     setMessage('')
     textInput.current.focus()
-  }, [dispatch, chatId, message])
+  }, [dispatch, chatId, message, setStyle])
 
   if (chatId) {
     return (

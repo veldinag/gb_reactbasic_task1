@@ -6,7 +6,7 @@ const Message = (props) => {
     const classes = useStyles()
 
     return (
-        <div className="fromMe">
+        <div className={props.message.style}>
             <Paper className={classes.msgBox}>
                 <Typography display="block" variant="caption" color="secondary">{props.message.date}</Typography>
                 <Typography display="block" variant="body1" align="center">{props.message.message}</Typography>

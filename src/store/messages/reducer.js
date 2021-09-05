@@ -10,6 +10,7 @@ const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE: {
             const currentList = state.messageList[action.chatId] || []
+            const setDate = action.style === "Robot" ? "From Robot" : getDate()[0] + ", " + getDate()[1]
             return {
                 ...state,
                 messageList: {
@@ -18,8 +19,9 @@ const messagesReducer = (state = initialState, action) => {
                         ...currentList,
                         {
                             id: `${Date.now().toString()}`,
-                            date: getDate()[0] + ", " + getDate()[1],
+                            date: setDate,
                             message: action.message,
+                            style: action.style,
                         }
                     ]
                 }
