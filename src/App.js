@@ -7,9 +7,10 @@ import {Container, Paper, Tab, Tabs} from "@material-ui/core"
 import Home from "./views/Home"
 import Chats from "./views/Chats"
 import Profile from "./views/Profile"
+import Exchange from "./views/Exchange"
 import NotFound from "./views/NotFound"
 import {useStyles} from "./style"
-import {HOME, CHATS, PROFILE} from "./constants"
+import {HOME, CHATS, PROFILE, EXCHANGE} from "./constants"
 import {chatsSelector, lastChatIdSelector} from "./store/chats/selectors"
 import {persistor} from "./store"
 
@@ -54,12 +55,14 @@ function App() {
                             <Tab label="Home" to={HOME} component={Link}/>
                             <Tab label="Chats" to={CHATS + "/" + lastChatId} component={Link}/>
                             <Tab label="Profile" to={PROFILE} component={Link}/>
+                            <Tab label="Exchange rate" to={EXCHANGE} component={Link}/>
                         </Tabs>
                     </Paper>
                     <Switch>
                         <Route exact path={HOME}><Home/></Route>
                         <Route path={CHATS + "/:chatId?"}><Chats/></Route>
                         <Route path={PROFILE}><Profile/></Route>
+                        <Route path={EXCHANGE}><Exchange/></Route>
                         <Route path="*"><NotFound/></Route>
                     </Switch>
                 </ Container>
