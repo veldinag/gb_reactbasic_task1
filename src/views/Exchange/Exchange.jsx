@@ -4,28 +4,27 @@ import {Paper, Typography, CircularProgress} from "@material-ui/core"
 import {
   exchDataSelector,
   exchRequestErrorSelector,
-  exchRequestStatusSelector
+  exchRequestLoadingSelector
 } from "../../store/exchange/selectors"
-import {getExchangeRates} from "../../store/exchange/actions"
+import {getExchangeRatesAction} from "../../store/exchange/actions"
 
 import useStyles from "./style"
-import {STATUSES} from "../../store/exchange/constants";
 
 
 const Exchange = () => {
   const dispatch = useDispatch()
   const data = useSelector(exchDataSelector)
   const error = useSelector(exchRequestErrorSelector)
-  const status = useSelector(exchRequestStatusSelector)
+  const loading = useSelector(exchRequestLoadingSelector)
   const classes = useStyles();
-
-  const requestData = () => {
-    dispatch(getExchangeRates())
-  };
 
   useEffect(() => {
     requestData()
   }, []);
+
+  const requestData = () => {
+    dispatch(getExchangeRatesAction())
+  };
 
   const renderData = useCallback(
     (item) => <Typography key={item[0]} className={classes.item} variant="h2">
@@ -34,7 +33,7 @@ const Exchange = () => {
     [classes.item, data.base]
   );
 
-  if (status === STATUSES.REQUEST) {
+  if (loading) {
     return <Paper className={classes.root}><CircularProgress/></Paper>
   };
 
@@ -53,7 +52,7 @@ const Exchange = () => {
       <Typography className={classes.heading} variant="h1">
         Exchange rates:
       </Typography>
-      {Object.entries(data.rates).map(renderData)}
+      {Object.entries(data["rates"]).map(renderData)}
     </Paper>
   )
 }
