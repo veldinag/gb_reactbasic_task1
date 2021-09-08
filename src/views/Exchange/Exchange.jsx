@@ -1,66 +1,59 @@
-import React, {useEffect} from "react"
+import React, {useCallback, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {Paper, Typography, LinearProgress} from "@material-ui/core"
+import {Paper, Typography, CircularProgress} from "@material-ui/core"
 import {
-  curExchRatesSelector,
+  exchDataSelector,
   exchRequestErrorSelector,
-  exchRequestLoadingSelector
+  exchRequestStatusSelector
 } from "../../store/exchange/selectors"
 import {getExchangeRates} from "../../store/exchange/actions"
 
 import useStyles from "./style"
+import {STATUSES} from "../../store/exchange/constants";
 
 
 const Exchange = () => {
   const dispatch = useDispatch()
-  const currExchRates = useSelector(curExchRatesSelector)
+  const data = useSelector(exchDataSelector)
   const error = useSelector(exchRequestErrorSelector)
-  const loading = useSelector(exchRequestLoadingSelector)
+  const status = useSelector(exchRequestStatusSelector)
   const classes = useStyles();
 
   const requestData = () => {
     dispatch(getExchangeRates())
-  }
+  };
 
   useEffect(() => {
     requestData()
-  }, [])
+  }, []);
 
-  const RenderCurrExchangeRates = ({data, error, loading}) => {
+  const renderData = useCallback(
+    (item) => <Typography key={item[0]} className={classes.item} variant="h2">
+          {"1.0000 " + item[0] + " = " + (1 / item[1]).toFixed(2) + " " + data.base}
+        </Typography>,
+    [classes.item, data.base]
+  );
 
-    if (loading) {
-      return <LinearProgress/>
-    }
+  if (status === STATUSES.REQUEST) {
+    return <Paper className={classes.root}><CircularProgress/></Paper>
+  };
 
-    if (error) {
-      return (
+  if (error) {
+    return (
+      <Paper className={classes.root}>
         <Typography variant="h4">
           Data loading error {`(${error})`}
         </Typography>
-      )
-    }
-
-    return [(
-      <Typography className={classes.heading} variant="h1">
-        Exchange rates:
-      </Typography>
-    ), Object.entries(data.rates).map(item => {
-        return (
-          <Typography className={classes.item} variant="h2">
-            {"1.0000 " + item[0] + " = " + (1 / item[1]).toFixed(2) + " " + data.base}
-          </Typography>
-        )
-      }
-    )]
-  }
+      </Paper>
+    )
+  };
 
   return (
     <Paper className={classes.root}>
-      <RenderCurrExchangeRates
-        data={currExchRates}
-        error={error}
-        loading={loading}
-      />
+      <Typography className={classes.heading} variant="h1">
+        Exchange rates:
+      </Typography>
+      {Object.entries(data.rates).map(renderData)}
     </Paper>
   )
 }

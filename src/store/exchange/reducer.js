@@ -1,11 +1,13 @@
-import {GET_EXCHANGE_FAILURE, GET_EXCHANGE_REQUEST, GET_EXCHANGE_SUCCESS, STATUSES} from "./constants"
+import {GET_EXCHANGE_FAILURE,
+        GET_EXCHANGE_REQUEST,
+        GET_EXCHANGE_SUCCESS,
+        STATUSES} from "./constants";
 
 const initialState = {
-  currExchRates: {},
+  data: { },
   request: STATUSES.IDLE,
-  loading: false,
   error: null,
-}
+};
 
 const exchangeReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -13,26 +15,23 @@ const exchangeReducer = (state = initialState, action) => {
       return {
         ...state,
         request: STATUSES.REQUEST,
-        loading: true,
-      }
+      };
     case GET_EXCHANGE_SUCCESS:
       return {
         ...state,
-        currExchRates: action.payload,
+        data: action.payload,
         request: STATUSES.SUCCESS,
-        loading: false,
-      }
+      };
     case GET_EXCHANGE_FAILURE:
       return {
         ...state,
         error: action.payload,
         request: STATUSES.FAILURE,
-        loading: false,
-      }
+      };
     default:
-      return state
-  }
-}
+      return state;
+  };
+};
 
-export default exchangeReducer
+export default exchangeReducer;
 
