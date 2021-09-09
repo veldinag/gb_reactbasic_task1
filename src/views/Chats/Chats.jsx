@@ -12,34 +12,32 @@ import {CHATS} from "../../constants";
 
 function Chats() {
 
-  const {chatId} = useParams();
-  const classes = useStyles();
-  const dispatch = useDispatch();
+    const {chatId} = useParams();
+    const classes = useStyles();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setPageAction(CHATS));
-  },[]);
+    useEffect(() => {
+        dispatch(setPageAction(CHATS));
+    }, []);
 
-  return (
-    <>
-      <Grid container spacing={1}>
-        <Grid item xs={3}>
-          <Paper variant="outlined" className={classes.chatsList}>
-            <ChatsList chatId={chatId}/>
-          </Paper>
+    return (
+        <Grid container spacing={1}>
+            <Grid item xs={3}>
+                <Paper variant="outlined" className={classes.chatsList}>
+                    <ChatsList chatId={chatId}/>
+                </Paper>
+            </Grid>
+            <Grid item xs={9}>
+                <Paper variant="outlined" className={classes.chat}>
+                    <MessageList chatId={chatId}/>
+                </Paper>
+            </Grid>
+            <Grid item xs={3}>
+                <AddRemoveForm chatId={chatId}/>
+            </Grid>
+            <MessageSendForm chatId={chatId}/>
         </Grid>
-        <Grid item xs={9}>
-          <Paper variant="outlined" className={classes.chat}>
-            <MessageList chatId={chatId}/>
-          </Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <AddRemoveForm chatId={chatId}/>
-        </Grid>
-        <MessageSendForm chatId={chatId}/>
-      </Grid>
-    </>
-  )
-}
+    );
+};
 
 export default Chats;

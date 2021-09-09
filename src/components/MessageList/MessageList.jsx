@@ -8,7 +8,7 @@ import "./MessageList.css"
 
 const MessageList = ({chatId}) => {
     const messages = useSelector(messagesSelector)
-    if (chatId && messages.hasOwnProperty(chatId)) {
+    if (chatId && messages[chatId]) {
         const renderMessages = messages[chatId].map(item => <Message key={item.id} message={item}/>)
         return renderMessages
     } else {

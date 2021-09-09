@@ -11,7 +11,7 @@ import {
   DialogTitle,
   TextField
 } from "@material-ui/core"
-import {addChat} from "../../store/chats/actions"
+import {addChatAction} from "../../store/chats/actions"
 
 const AddChatButton = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -31,7 +31,7 @@ const AddChatButton = () => {
   }
 
   const handleAddNewChat = useCallback(() => {
-    dispatch(addChat(newChat))
+    dispatch(addChatAction(newChat))
     setNewChat("")
     handleClose()
   }, [dispatch, newChat])

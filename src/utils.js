@@ -1,21 +1,26 @@
-let getDate = () => {
-    const currentDate = new Date();
-    let dateString = []
+import { v4 as uuidv4 } from 'uuid';
+
+const currentDate = new Date();
+
+export const getDate = () => {
     const dateOptions = {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric'
+    };
+    return currentDate.toLocaleString("ru", dateOptions);
+};
 
-    }
-    const timeOptions = {
+export const getTime = () => {
+       const timeOptions = {
         timezone: 'UTC',
         hour: 'numeric',
         minute: 'numeric'
-    }
+    };
+    return currentDate.toLocaleString("ru", timeOptions);
+};
 
-    dateString.push(currentDate.toLocaleString("ru", dateOptions))
-    dateString.push(currentDate.toLocaleString("ru", timeOptions))
-    return dateString;
-}
+export const getNewId = () => {
+    return uuidv4();
+};
 
-export default getDate;
