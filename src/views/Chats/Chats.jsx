@@ -1,16 +1,24 @@
-import React from 'react'
-import {useParams} from "react-router-dom"
-import {Grid, Paper} from '@material-ui/core'
-import MessageSendForm from "../../components/MessageSendForm"
-import ChatsList from "../../components/ChatsList"
-import {useStyles} from "./style"
-import AddRemoveForm from "../../components/AddRemoveForm"
-import MessageList from "../../components/MessageList"
+import React, {useEffect} from 'react';
+import {useDispatch} from "react-redux";
+import {useParams} from "react-router-dom";
+import {Grid, Paper} from '@material-ui/core';
+import MessageSendForm from "../../components/MessageSendForm";
+import ChatsList from "../../components/ChatsList";
+import {useStyles} from "./style";
+import AddRemoveForm from "../../components/AddRemoveForm";
+import MessageList from "../../components/MessageList";
+import {setPageAction} from "../../store/pages/actions";
+import {CHATS} from "../../constants";
 
 function Chats() {
 
-  const {chatId} = useParams()
-  const classes = useStyles()
+  const {chatId} = useParams();
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setPageAction(CHATS));
+  },[]);
 
   return (
     <>

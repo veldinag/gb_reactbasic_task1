@@ -6,6 +6,7 @@ import profileReducer from "./profile/reducer";
 import chatsReducer from "./chats/reducer";
 import messagesReducer from "./messages/reducer";
 import exchangeReducer from "./exchange/reducer";
+import pagesReducer from "./pages/reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     messages: messagesReducer,
     exchange: exchangeReducer,
+    pages: pagesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

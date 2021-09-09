@@ -1,0 +1,1 @@
+export const SET_PAGE = "PAGES::SET_PAGE"

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {BrowserRouter, Route, Switch, useLocation, useRouteMatch} from "react-router-dom"
+import {BrowserRouter, Route, Switch} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {PersistGate} from "redux-persist/integration/react"
 import {Container} from "@material-ui/core"
@@ -16,11 +16,13 @@ import {persistor} from "./store"
 import './App.css'
 import 'typeface-roboto'
 import TopMenu from "./components/TopMenu";
+import {pageSelector} from "./store/pages/selectors";
 
 function App() {
-    const chats = useSelector(chatsSelector)
-    const lastChatId = useSelector(lastChatIdSelector)
-    const [chatId, setChatId] = useState(lastChatId)
+    const chats = useSelector(chatsSelector);
+    const lastChatId = useSelector(lastChatIdSelector);
+    const [chatId, setChatId] = useState(lastChatId);
+    const page = useSelector(pageSelector);
 
     useEffect(() => {
         if (chats.length > 0) {
@@ -38,7 +40,7 @@ function App() {
         <PersistGate loading={null} persistor={persistor}>
             <BrowserRouter>
                 <Container maxWidth="md">
-                    <TopMenu lastChatId={lastChatId}/>
+                    <TopMenu lastChatId={lastChatId} page={page}/>
                     <Switch>
                         <Route exact path={HOME}><Home/></Route>
                         <Route path={CHATS + "/:chatId?"}><Chats/></Route>
