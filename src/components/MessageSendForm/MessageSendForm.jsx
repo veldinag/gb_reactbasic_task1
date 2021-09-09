@@ -20,7 +20,7 @@ const MessageSendForm = ({chatId}) => {
     }
   }, [chatId])
 
-  const handleClick = useCallback(() => {
+  const handleAddMessage = useCallback(() => {
     dispatch(addMessageFromRobot(chatId, message, setStyle))
     setMessage('')
     textInput.current.focus()
@@ -45,7 +45,7 @@ const MessageSendForm = ({chatId}) => {
                     size="medium"
                     disabled={!message}
                     endIcon={<Icon>send</Icon>}
-                    onClick={handleClick}>SEND
+                    onClick={handleAddMessage}>SEND
             </Button>
           </Grid>
         </Grid>

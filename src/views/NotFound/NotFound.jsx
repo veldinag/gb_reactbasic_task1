@@ -1,17 +1,25 @@
-import React from "react"
-import {Paper, Typography} from "@material-ui/core"
-import useStyles from "./style"
+import React, {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {Paper, Typography} from "@material-ui/core";
+import useStyles from "./style";
+
+import {setPageAction} from "../../store/pages/actions";
+import {HOME} from "../../constants";
 
 const NotFound = () => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
 
-    const classes = useStyles();
+  useEffect(() => {
+    dispatch(setPageAction(HOME));
+  }, [])
 
-    return (
-        <Paper className={classes.root}>
-            <div><Typography variant="h1">404</Typography></div>
-            <div><Typography variant="h2">Page not found</Typography></div>
-        </Paper>
-    )
+  return (
+    <Paper className={classes.root}>
+      <div><Typography variant="h1">404</Typography></div>
+      <div><Typography variant="h2">Page not found</Typography></div>
+    </Paper>
+  )
 }
 
-export default NotFound
+export default NotFound;

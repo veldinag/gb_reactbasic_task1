@@ -1,12 +1,13 @@
 import {ADD_CHAT, CHANGE_LAST_CHAT_ID, REMOVE_CHAT} from "./constants"
+import {getNewId} from "../../utils";
 
 const initialState = {
   chatList: [],
   lastChatId: "",
-}
+};
 
 const chatsReducer = (state = initialState, action) => {
-  const id = `id${Date.now().toString()}`
+  const id = getNewId();
   switch (action.type) {
     case ADD_CHAT:
       return {
@@ -25,7 +26,7 @@ const chatsReducer = (state = initialState, action) => {
       const chatId = (newChats.length > 0) ? newChats[newChats.length - 1].id : ""
       return {
         ...state,
-        chatList: newChats,
+        chatList: {...newChats},
         lastChatId: chatId,
       }
     case CHANGE_LAST_CHAT_ID:
@@ -36,6 +37,6 @@ const chatsReducer = (state = initialState, action) => {
     default:
       return state
   }
-}
+};
 
-export default chatsReducer
+export default chatsReducer;

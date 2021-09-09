@@ -1,16 +1,16 @@
 import {ADD_MESSAGE, REMOVE_MESSAGES} from "./constants"
-import getDate from "../../utils";
+import {getDate, getNewId, getTime} from "../../utils";
 import removeByKey from "./utils";
 
 const initialState = {
     messageList: {},
-}
+};
 
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE: {
-            const currentList = state.messageList[action.chatId] || []
-            const setDate = action.style === "Robot" ? "From Robot" : getDate()[0] + ", " + getDate()[1]
+            const currentList = state.messageList[action.chatId] || [];
+            const setDate = action.style === "Robot" ? "From Robot" : getDate() + ", " + getTime();
             return {
                 ...state,
                 messageList: {
@@ -18,7 +18,7 @@ const messagesReducer = (state = initialState, action) => {
                     [action.chatId]: [
                         ...currentList,
                         {
-                            id: `${Date.now().toString()}`,
+                            id: getNewId(),
                             date: setDate,
                             message: action.message,
                             style: action.style,
@@ -34,8 +34,8 @@ const messagesReducer = (state = initialState, action) => {
             }
         }
         default:
-            return state
-    }
-}
+            return state;
+    };
+};
 
-export default messagesReducer
+export default messagesReducer;

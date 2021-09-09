@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useRef } from "react";
+import React, {useState, useCallback, useRef, useEffect} from "react";
 import {Button, Grid, Paper, TextField, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -6,6 +6,8 @@ import useStyles from "./style";
 
 import {changeName} from "../../store/profile/actions"
 import {nameSelector} from "../../store/profile/selectors";
+import {setPageAction} from "../../store/pages/actions";
+import {PROFILE} from "../../constants";
 
 export default function Profile() {
     const classes = useStyles();
@@ -19,10 +21,14 @@ export default function Profile() {
     }, [])
 
     const setName = useCallback(() => {
-        dispatch(changeName(value))
-        setValue("")
-        refInput.current.focus()
-    }, [dispatch, value])
+        dispatch(changeName(value));
+        setValue("");
+        refInput.current.focus();
+    }, [dispatch, value]);
+
+    useEffect(() => {
+        dispatch(setPageAction(PROFILE));
+    },[]);
 
     return (
         <Paper className={classes.root}>
