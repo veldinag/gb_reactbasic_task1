@@ -26,7 +26,7 @@ const chatsReducer = (state = initialState, action) => {
       const chatId = (newChats.length > 0) ? newChats[newChats.length - 1].id : ""
       return {
         ...state,
-        chatList: {...newChats},
+        chatList: [...newChats],
         lastChatId: chatId,
       }
     case CHANGE_LAST_CHAT_ID:

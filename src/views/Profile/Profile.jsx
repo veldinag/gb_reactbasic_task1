@@ -7,7 +7,6 @@ import useStyles from "./style";
 import {changeName} from "../../store/profile/actions"
 import {nameSelector} from "../../store/profile/selectors";
 import {setPageAction} from "../../store/pages/actions";
-import {PROFILE} from "../../constants";
 
 export default function Profile() {
     const classes = useStyles();
@@ -27,7 +26,7 @@ export default function Profile() {
     }, [dispatch, value]);
 
     useEffect(() => {
-        dispatch(setPageAction(PROFILE));
+        dispatch(setPageAction(2));
     },[]);
 
     return (

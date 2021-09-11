@@ -1,7 +1,7 @@
 import {SET_PAGE} from "./constants";
 
 const initialState = {
-  page: "",
+  page: null,
 }
 
 const pagesReducer = (state = initialState, action) => {

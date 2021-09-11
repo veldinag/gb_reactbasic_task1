@@ -11,7 +11,7 @@ const NotFound = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(setPageAction(HOME));
+    dispatch(setPageAction(0));
   }, [])
 
   return (
