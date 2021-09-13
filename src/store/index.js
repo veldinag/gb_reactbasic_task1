@@ -13,7 +13,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ["exchange"]
+    blacklist: ["exchange", "profile"]
 };
 
 const rootReducer = combineReducers({
