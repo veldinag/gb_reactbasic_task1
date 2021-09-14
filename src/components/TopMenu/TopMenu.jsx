@@ -6,7 +6,7 @@ import {CHATS, EXCHANGE, HOME, LOGIN, LOGOUT, PROFILE, SIGNUP} from "../../const
 import {useStyles} from "./style"
 import {AddCircle, Input, MeetingRoom, PersonAdd} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
-import SignUp from "../SignUp";
+import AccountForm from "../AccountForm";
 
 const TopMenu = ({lastChatId, page}) => {
   const classes = useStyles();
@@ -29,11 +29,7 @@ const TopMenu = ({lastChatId, page}) => {
         <Tab value={3} label="Exchange rate" to={EXCHANGE} component={Link}/>
       </Tabs>
       <div className={classes.authorization}>
-
-        <IconButton>
-          <Input color="action"/>
-        </IconButton>
-        <SignUp />
+        <AccountForm />
       </div>
     </Paper>
   )
