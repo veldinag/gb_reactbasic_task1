@@ -1,26 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 import {Container} from "@material-ui/core";
-import firebase from "firebase";
 
 import TopMenu from "./components/TopMenu";
 import Routes from "./components/Routes";
 
 import {chatsSelector, lastChatIdSelector} from "./store/chats/selectors";
 import {persistor} from "./store";
-import {pageSelector} from "./store/pages/selectors";
 
 import './App.css';
 import 'typeface-roboto';
+import firebase from "firebase";
+import {setSignedInAction, setSignedOutAction} from "./store/authorization/actions";
 
 function App() {
+  const dispatch = useDispatch();
   const chats = useSelector(chatsSelector);
   const lastChatId = useSelector(lastChatIdSelector);
   const [chatId, setChatId] = useState(lastChatId);
-  const [authed, setAuthed] = useState(false);
-  const page = useSelector(pageSelector);
 
   useEffect(() => {
     if (chats.length > 0) {
@@ -37,9 +36,9 @@ function App() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        setAuthed(true);
+        dispatch(setSignedInAction());
       } else {
-        setAuthed(false);
+        dispatch(setSignedOutAction());
       }
     })
   }, []);
@@ -48,8 +47,8 @@ function App() {
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
         <Container maxWidth="md">
-          <TopMenu lastChatId={lastChatId} page={page} authed={authed}/>
-          <Routes authed={authed}/>
+          <TopMenu lastChatId={lastChatId}/>
+          <Routes/>
         </ Container>
       </BrowserRouter>
     </PersistGate>

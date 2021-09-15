@@ -1,0 +1,1 @@
+export const authStatusSelector = (state) => state.authorization.authorized;

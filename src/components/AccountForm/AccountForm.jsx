@@ -44,8 +44,8 @@ const AccountForm = () => {
       case "sign-up" || "sign-in": return "inherit";
       case "auth-ok" || "reg-ok": return "primary";
       case "reg-err" || "auth-err": return "error";
+      default: return "";
     }
-    ;
   };
 
   const setDialogTitle = (status) => {
@@ -54,8 +54,8 @@ const AccountForm = () => {
         return "Register new user";
       case "sign-in" || "auth-ok" || "auth-err" :
         return "Sign in";
+      default: return "";
     }
-    ;
   };
 
   const setDialogContentText = (status) => {
@@ -90,6 +90,7 @@ const AccountForm = () => {
         return `Registration error (${error})!`;
       case "auth-err":
         return `Login error! (${error})`;
+      default: return "";
     }
     ;
   };
