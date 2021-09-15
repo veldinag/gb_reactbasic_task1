@@ -10,11 +10,11 @@ import {
   IconButton,
   Link
 } from "@material-ui/core";
-
 import firebase from "firebase";
 
 import {Person} from "@material-ui/icons";
 import {useStyles} from "./style";
+
 
 const AccountForm = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,22 +25,25 @@ const AccountForm = () => {
 
   const classes = useStyles();
 
-  const handleSetAuthStatusToSignIn = () => {
+  const handleSetAuthStatusToSignIn = (event) => {
+    event.preventDefault();
+    setEmail("");
+    setPassword("");
     setAuthStatus("sign-in");
   };
 
-  const handleSetAuthStatusToSignUp = () => {
+  const handleSetAuthStatusToSignUp = (event) => {
+    event.preventDefault();
+    setEmail("");
+    setPassword("");
     setAuthStatus("sign-up");
   };
 
   const setDialogContentTextColor = (status) => {
     switch (status) {
-      case "sign-up" || "sign-in":
-        return "inherit";
-      case "auth-ok" || "reg-ok":
-        return "primary";
-      case "reg-err" || "auth-err":
-        return "error";
+      case "sign-up" || "sign-in": return "inherit";
+      case "auth-ok" || "reg-ok": return "primary";
+      case "reg-err" || "auth-err": return "error";
     }
     ;
   };
@@ -59,7 +62,9 @@ const AccountForm = () => {
     switch (status) {
       case "sign-up": {
         return [
-          "To register, please enter your email address and password.",
+          "To register, please enter your email address and password",
+          <br/>,
+          "(password should be at least 6 characters).",
           <br/>,
           "If you have an account, please ",
           <Link href='#' onClick={handleSetAuthStatusToSignIn}>
@@ -82,9 +87,9 @@ const AccountForm = () => {
       case "reg-ok":
         return "New user added!";
       case "reg-err":
-        return "Registration error!";
+        return `Registration error (${error})!`;
       case "auth-err":
-        return "Login error!";
+        return `Login error! (${error})`;
     }
     ;
   };
@@ -108,8 +113,16 @@ const AccountForm = () => {
     setPassword(event.target.value)
   };
 
-  const handleSignIn = () => {
-    console.log("added");
+  const handleSignIn = async (event) => {
+    event.preventDefault();
+    setError("");
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      setAuthStatus("auth-ok");
+    } catch (err) {
+      setError(err.message);
+      setAuthStatus("auth-err");
+    }
   };
 
   const handleSignUp = async (event) => {
@@ -117,8 +130,10 @@ const AccountForm = () => {
     setError("");
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-    } catch (error) {
-      setError(error.message);
+      setAuthStatus("reg-ok");
+    } catch (err) {
+      setError(err.message);
+      setAuthStatus("reg-err");
     }
   };
 
@@ -202,6 +217,6 @@ const AccountForm = () => {
       </Dialog>
     </div>
   )
-}
+};
 
 export default AccountForm;

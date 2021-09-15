@@ -1,58 +1,59 @@
-import React, {useEffect, useState} from "react"
-import {BrowserRouter, Route, Switch} from "react-router-dom"
-import {useSelector} from "react-redux"
-import {PersistGate} from "redux-persist/integration/react"
-import {Container} from "@material-ui/core"
+import React, {useEffect, useState} from "react";
+import {BrowserRouter} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {PersistGate} from "redux-persist/integration/react";
+import {Container} from "@material-ui/core";
+import firebase from "firebase";
 
-import Home from "./views/Home"
-import Chats from "./views/Chats"
-import Profile from "./views/Profile"
-import Exchange from "./views/Exchange"
-import NotFound from "./views/NotFound"
-import {HOME, CHATS, PROFILE, EXCHANGE, CHAT_ID} from "./constants"
-import {chatsSelector, lastChatIdSelector} from "./store/chats/selectors"
-import {persistor} from "./store"
-
-import './App.css'
-import 'typeface-roboto'
 import TopMenu from "./components/TopMenu";
+import Routes from "./components/Routes";
+
+import {chatsSelector, lastChatIdSelector} from "./store/chats/selectors";
+import {persistor} from "./store";
 import {pageSelector} from "./store/pages/selectors";
 
+import './App.css';
+import 'typeface-roboto';
+
 function App() {
-    const chats = useSelector(chatsSelector);
-    const lastChatId = useSelector(lastChatIdSelector);
-    const [chatId, setChatId] = useState(lastChatId);
-    const page = useSelector(pageSelector);
+  const chats = useSelector(chatsSelector);
+  const lastChatId = useSelector(lastChatIdSelector);
+  const [chatId, setChatId] = useState(lastChatId);
+  const [authed, setAuthed] = useState(false);
+  const page = useSelector(pageSelector);
 
-    useEffect(() => {
-        if (chats.length > 0) {
-            if (!chatId) {
-                setChatId(chats[0].id)
-            } else {
-                setChatId(lastChatId)
-            }
-        } else {
-            setChatId("")
-        }
-    }, [lastChatId, chats, chatId])
+  useEffect(() => {
+    if (chats.length > 0) {
+      if (!chatId) {
+        setChatId(chats[0].id);
+      } else {
+        setChatId(lastChatId);
+      }
+    } else {
+      setChatId("");
+    }
+  }, [lastChatId, chats, chatId]);
 
-    return (
-        <PersistGate loading={null} persistor={persistor}>
-            <BrowserRouter>
-                <Container maxWidth="md">
-                    <TopMenu lastChatId={lastChatId} page={page}/>
-                    <Switch>
-                        <Route exact path={HOME}><Home/></Route>
-                        <Route path={CHATS + CHAT_ID}><Chats/></Route>
-                        <Route path={PROFILE}><Profile/></Route>
-                        <Route path={EXCHANGE}><Exchange/></Route>
-                        <Route path="*"><NotFound/></Route>
-                    </Switch>
-                </ Container>
-            </BrowserRouter>
-        </PersistGate>
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setAuthed(true);
+      } else {
+        setAuthed(false);
+      }
+    })
+  }, []);
 
-    )
+  return (
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <Container maxWidth="md">
+          <TopMenu lastChatId={lastChatId} page={page} authed={authed}/>
+          <Routes authed={authed}/>
+        </ Container>
+      </BrowserRouter>
+    </PersistGate>
+  )
 }
 
 export default App;
