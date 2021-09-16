@@ -102,13 +102,14 @@ const AccountForm = () => {
   const handleSignIn = async (event) => {
     event.preventDefault();
     dispatch(signInAction(email, password));
-    history.push(ROUTES.HOME)
+    history.push(ROUTES.HOME);
     handleCloseDialog();
   };
 
   const handleSignUp = async (event) => {
     event.preventDefault();
     dispatch(signUpAction(email, password));
+    history.push(ROUTES.HOME);
     handleCloseDialog();
   };
 

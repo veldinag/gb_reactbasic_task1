@@ -10,8 +10,6 @@ const firebaseConfig = {
     storageBucket: "learning-react-base.appspot.com",
     messagingSenderId: "38303539237",
     appId: "1:38303539237:web:12054b6301911331435fcc"
-
-
 };
 
 firebase.initializeApp(firebaseConfig);

@@ -7,8 +7,6 @@ function Alert(props) {
 }
 
 const AuthAlert = ({status, error, show}) => {
-  const vertical = 'top';
-  const horizontal = 'center';
 
   const setSeverity = () => {
     if (error) {
@@ -16,12 +14,11 @@ const AuthAlert = ({status, error, show}) => {
     } else {
       return "success";
     }
-
   };
 
   const setAlertMsg = () => {
     if (error) {
-      return `Error: ${error}`;
+      return `Error: ${error} Try again.`;
     } else {
       switch (status) {
         case "signed-in":
@@ -33,9 +30,7 @@ const AuthAlert = ({status, error, show}) => {
         default:
           return ``;
       }
-      ;
     }
-    ;
   };
 
   const handleCloseAlert = (event, reason) => {
@@ -47,9 +42,8 @@ const AuthAlert = ({status, error, show}) => {
   return (
     <Snackbar
       open={show}
-      autoHideDuration={2000}
       onClose={handleCloseAlert}
-      anchorOrigin={{vertical, horizontal}}>
+      anchorOriginBottomCenter>
       <Alert severity={setSeverity()}>
         {setAlertMsg()}
       </Alert>
