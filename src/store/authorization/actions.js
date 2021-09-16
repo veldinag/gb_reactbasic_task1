@@ -63,4 +63,12 @@ export const signOutAction = () => async (dispatch) => {
   };
 };
 
+export const getAuthStateFromFirebaseAction = () => (dispatch) =>{
+  firebase.auth().onAuthStateChanged((user) => {
+    (user)
+        ? dispatch(setAuthStatusAuthedAction())
+        : dispatch(setAuthStatusNotAuthedAction())
+  });
+}
+
 

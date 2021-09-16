@@ -4,29 +4,35 @@ import {useDispatch, useSelector} from "react-redux";
 
 import useStyles from "./style";
 
-import {changeName} from "../../store/profile/actions"
+import {
+    changeNameAction,
+    getNameFromFirebaseProfileAction,
+    setNameInFirebaseProfileAction
+} from "../../store/profile/actions"
 import {nameSelector} from "../../store/profile/selectors";
 import {setPageAction} from "../../store/pages/actions";
 
 export default function Profile() {
     const classes = useStyles();
-    const refInput = useRef(null)
-    const userName = useSelector(nameSelector)
-    const dispatch = useDispatch()
-    const [value, setValue] = useState("")
+    const dispatch = useDispatch();
+    const refInput = useRef(null);
+    const userName = useSelector(nameSelector);
+    const [value, setValue] = useState("");
 
     const handleChange = useCallback((e) => {
         setValue(e.target.value)
     }, [])
 
     const setName = useCallback(() => {
-        dispatch(changeName(value));
+        dispatch(changeNameAction(value));
+        dispatch(setNameInFirebaseProfileAction());
         setValue("");
         refInput.current.focus();
     }, [dispatch, value]);
 
     useEffect(() => {
         dispatch(setPageAction(2));
+        dispatch(getNameFromFirebaseProfileAction());
     },[]);
 
     return (
@@ -56,7 +62,7 @@ export default function Profile() {
                 </Grid>
             </Grid>
 
-            <Typography variant="h4">{(userName) ? "Name changed to " + userName : ""}</Typography>
+            <Typography variant="h4">{(userName) && "Your name is  " + userName }</Typography>
         </Paper>
     )
 }

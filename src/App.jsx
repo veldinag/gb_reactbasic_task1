@@ -10,7 +10,11 @@ import Routes from "./components/Routes";
 
 import {persistor} from "./store";
 import {chatsSelector, lastChatIdSelector} from "./store/chats/selectors";
-import {setAuthStatusAuthedAction, setAuthStatusNotAuthedAction} from "./store/authorization/actions";
+import {
+    getAuthStateFromFirebaseAction,
+    setAuthStatusAuthedAction,
+    setAuthStatusNotAuthedAction
+} from "./store/authorization/actions";
 
 import './App.css';
 import 'typeface-roboto';
@@ -34,11 +38,7 @@ function App() {
     }, [lastChatId, chats, chatId]);
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
-            (user)
-                ? dispatch(setAuthStatusAuthedAction())
-                : dispatch(setAuthStatusNotAuthedAction())
-        })
+        dispatch(getAuthStateFromFirebaseAction())
     }, []);
 
     return (

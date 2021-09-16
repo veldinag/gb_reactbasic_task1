@@ -5,7 +5,7 @@ import "firebase/database";
 const firebaseConfig = {
     apiKey: "AIzaSyDbAWEcvhEYypD-9rnS4rkC2sQskKsbRqo",
     authDomain: "learning-react-base.firebaseapp.com",
-    databaseURL: "https://learning-importreact-base-default-rtdb.europe-west1.firebasedatabase.app",
+    databaseURL: "https://learning-react-base-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "learning-react-base",
     storageBucket: "learning-react-base.appspot.com",
     messagingSenderId: "38303539237",
