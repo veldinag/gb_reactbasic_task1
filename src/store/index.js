@@ -7,7 +7,7 @@ import chatsReducer from "./chats/reducer";
 import messagesReducer from "./messages/reducer";
 import exchangeReducer from "./exchange/reducer";
 import pagesReducer from "./pages/reducer";
-import authorizationReducer from "./authorization/reducer";
+import authReducer from "./authorization/reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
     messages: messagesReducer,
     exchange: exchangeReducer,
     pages: pagesReducer,
-    authorization: authorizationReducer,
+    authorization: authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

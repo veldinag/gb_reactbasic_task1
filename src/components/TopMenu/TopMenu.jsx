@@ -9,12 +9,12 @@ import AccountForm from "../AccountForm";
 import {useSelector} from "react-redux";
 import {pageSelector} from "../../store/pages/selectors";
 import SignOut from "../SignOut/SignOut";
-import {authStatusSelector} from "../../store/authorization/selectors";
+import {authIsAuthorizedSelector} from "../../store/authorization/selectors";
 
 const TopMenu = ({lastChatId}) => {
     const classes = useStyles();
     const page = useSelector(pageSelector);
-    const authed = useSelector(authStatusSelector);
+    const authed = useSelector(authIsAuthorizedSelector);
 
     return (
         <Paper className={classes.root}>
