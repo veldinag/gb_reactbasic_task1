@@ -3,16 +3,13 @@ import {useDispatch} from "react-redux";
 import {Paper, Typography} from "@material-ui/core";
 import useStyles from "./style";
 import {setPageAction} from "../../store/pages/actions";
-import {HOME} from "../../constants";
-
-
 
 const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setPageAction(HOME));
+    dispatch(setPageAction(0));
   },[]);
 
   return (

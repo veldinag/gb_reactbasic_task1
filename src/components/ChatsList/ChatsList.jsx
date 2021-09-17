@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useEffect} from "react";
 import {Link} from "react-router-dom";
 import {List, ListItem, ListItemText} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
@@ -24,7 +24,7 @@ const ChatsList = ({ chatId }) => {
           <ListItem
             button
             onClick={() => dispatch(changeLastChatIdAction(chatItem.id))}
-            to={"/chats/" + chatItem.id.toString()}
+            to={"/chats/" + chatItem.id}
             component={Link}
             key={chatItem.id}
             selected={(chatId === chatItem.id)}>

@@ -1,4 +1,4 @@
-import {ADD_MESSAGE, REMOVE_MESSAGES} from "./constants"
+import {ADD_MESSAGE, CHANGE_MESSAGES, REMOVE_MESSAGES} from "./constants"
 import {getDate, getNewId, getTime} from "../../utils";
 import removeByKey from "./utils";
 
@@ -31,6 +31,15 @@ const messagesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 messageList: removeByKey(state.messageList, action.chatId)
+            }
+        }
+        case CHANGE_MESSAGES: {
+            return {
+                ...state,
+                messageList: {
+                    ...state.messageList,
+                    [action.chatId]: action.messages
+                }
             }
         }
         default:

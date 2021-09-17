@@ -4,14 +4,13 @@ import {Paper, Typography} from "@material-ui/core";
 import useStyles from "./style";
 
 import {setPageAction} from "../../store/pages/actions";
-import {HOME} from "../../constants";
 
 const NotFound = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(setPageAction(HOME));
+    dispatch(setPageAction(0));
   }, [])
 
   return (

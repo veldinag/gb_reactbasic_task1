@@ -2,7 +2,7 @@ import {Button, Grid, TextField} from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useDispatch} from "react-redux";
-import {addMessageFromRobot} from "../../store/messages/actions";
+import {addMessageFromRobot, addNewMessageToFirebaseMessagesAction} from "../../store/messages/actions";
 
 const MessageSendForm = ({chatId}) => {
   const textInput = useRef(null)
@@ -21,7 +21,8 @@ const MessageSendForm = ({chatId}) => {
   }, [chatId])
 
   const handleAddMessage = useCallback(() => {
-    dispatch(addMessageFromRobot(chatId, message, setStyle))
+    //dispatch(addMessageFromRobot(chatId, message, setStyle))
+    dispatch(addNewMessageToFirebaseMessagesAction(chatId, message, setStyle))
     setMessage('')
     textInput.current.focus()
   }, [dispatch, chatId, message, setStyle])

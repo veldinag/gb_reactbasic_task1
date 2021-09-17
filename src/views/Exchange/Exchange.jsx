@@ -10,8 +10,6 @@ import {getExchangeRatesAction} from "../../store/exchange/actions"
 
 import useStyles from "./style"
 import {setPageAction} from "../../store/pages/actions";
-import {EXCHANGE} from "../../constants";
-
 
 const Exchange = () => {
   const dispatch = useDispatch()
@@ -21,7 +19,7 @@ const Exchange = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(setPageAction(EXCHANGE));
+    dispatch(setPageAction(3));
     requestData();
   }, []);
 

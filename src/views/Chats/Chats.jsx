@@ -8,7 +8,6 @@ import {useStyles} from "./style";
 import AddRemoveForm from "../../components/AddRemoveForm";
 import MessageList from "../../components/MessageList";
 import {setPageAction} from "../../store/pages/actions";
-import {CHATS} from "../../constants";
 
 function Chats() {
 
@@ -17,7 +16,7 @@ function Chats() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setPageAction(CHATS));
+        dispatch(setPageAction(1));
     }, []);
 
     return (
