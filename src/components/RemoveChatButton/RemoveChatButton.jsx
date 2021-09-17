@@ -4,8 +4,8 @@ import IconButton from "@material-ui/core/IconButton";
 import {RemoveCircle} from "@material-ui/icons";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 import {chatsSelector} from "../../store/chats/selectors";
-import {removeChatAction} from "../../store/chats/actions";
-import {removeMessages} from "../../store/messages/actions";
+import {removeChatFromFirebaseChatsAction} from "../../store/chats/actions";
+import {removeMessagesFromFirebaseMessagesAction} from "../../store/messages/actions";
 
 
 const RemoveChatButton = ({chatId}) => {
@@ -26,8 +26,8 @@ const RemoveChatButton = ({chatId}) => {
     };
 
     const handleRemoveChat = useCallback(() => {
-        dispatch(removeChatAction(chatId));
-        dispatch(removeMessages(chatId));
+        dispatch(removeChatFromFirebaseChatsAction(chatId));
+        dispatch(removeMessagesFromFirebaseMessagesAction(chatId));
         handleClose();
     }, [dispatch, chatId]);
 

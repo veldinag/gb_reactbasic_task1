@@ -1,7 +1,7 @@
-import React, {useCallback, useState} from "react"
-import {useDispatch} from "react-redux"
-import IconButton from "@material-ui/core/IconButton"
-import {AddCircle} from "@material-ui/icons"
+import React, {useCallback, useState} from "react";
+import {useDispatch} from "react-redux";
+import IconButton from "@material-ui/core/IconButton";
+import {AddCircle} from "@material-ui/icons";
 import {
   Button,
   Dialog,
@@ -10,38 +10,43 @@ import {
   DialogContentText,
   DialogTitle,
   TextField
-} from "@material-ui/core"
-import {addChatAction} from "../../store/chats/actions"
+} from "@material-ui/core";
+import {
+  addChatAction,
+  addNewChatToFirebaseChatsAction,
+  getChatsFromFirebaseChatsAction
+} from "../../store/chats/actions";
 
 const AddChatButton = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [newChat, setNewChat] = useState("")
-  const dispatch = useDispatch()
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const [newChat, setNewChat] = useState("");
+  const dispatch = useDispatch();
 
-  const handleClickOpen = () => {
-    setIsOpen(true)
-  }
+  const handleOpenDialog = () => {
+    setIsOpenDialog(true);
+  };
 
-  const handleClose = () => {
-    setIsOpen(false)
-  }
+  const handleCloseDialog = () => {
+    setIsOpenDialog(false);
+  };
 
   const handleChangeName = (event) => {
-    setNewChat(event.target.value)
-  }
+    setNewChat(event.target.value);
+  };
 
   const handleAddNewChat = useCallback(() => {
-    dispatch(addChatAction(newChat))
-    setNewChat("")
-    handleClose()
+    //dispatch(addChatAction(newChat));
+    dispatch(addNewChatToFirebaseChatsAction(newChat));
+    setNewChat("");
+    handleCloseDialog();
   }, [dispatch, newChat])
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen}>
+      <IconButton onClick={handleOpenDialog}>
         <AddCircle color="primary"/>
       </IconButton>
-      <Dialog open={isOpen} onClose={handleClose}>
+      <Dialog open={isOpenDialog} onClose={handleCloseDialog}>
         <DialogTitle>Add new chat</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -58,7 +63,7 @@ const AddChatButton = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleCloseDialog} color="primary">
             Cancel
           </Button>
           <Button

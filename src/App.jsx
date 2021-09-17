@@ -3,21 +3,18 @@ import {BrowserRouter} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 import {Container} from "@material-ui/core";
-import firebase from "firebase";
 
 import TopMenu from "./components/TopMenu";
 import Routes from "./components/Routes";
 
 import {persistor} from "./store";
 import {chatsSelector, lastChatIdSelector} from "./store/chats/selectors";
-import {
-    getAuthStateFromFirebaseAction,
-    setAuthStatusAuthedAction,
-    setAuthStatusNotAuthedAction
+import {getAuthStateFromFirebaseAction
 } from "./store/authorization/actions";
 
 import './App.css';
 import 'typeface-roboto';
+import {initChatsTrackingAction} from "./store/chats/actions";
 
 function App() {
     const dispatch = useDispatch();
@@ -38,7 +35,8 @@ function App() {
     }, [lastChatId, chats, chatId]);
 
     useEffect(() => {
-        dispatch(getAuthStateFromFirebaseAction())
+        dispatch(getAuthStateFromFirebaseAction());
+        dispatch(initChatsTrackingAction());
     }, []);
 
     return (

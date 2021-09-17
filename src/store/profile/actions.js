@@ -21,7 +21,6 @@ export const getNameFromFirebaseProfileAction = () => (dispatch) => {
 export const setNameInFirebaseProfileAction = () => (dispatch, getState) => {
     const uid = firebase.auth().currentUser.uid;
     const state = getState();
-    console.log(state);
     firebase
         .database()
         .ref("profile")
