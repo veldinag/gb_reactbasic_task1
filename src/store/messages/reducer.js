@@ -18,8 +18,8 @@ const messagesReducer = (state = initialState, action) => {
                     [action.chatId]: [
                         ...currentList,
                         {
-                            id: getNewId(),
-                            date: setDate,
+                            id: "id",//getNewId(),
+                            date: "date",//setDate,
                             message: action.message,
                             style: action.style,
                         }

@@ -12,7 +12,7 @@ export const removeMessages = (chatId) => ({
   chatId,
 })
 
-export const addMessageFromRobot = (chatId, message, style) => (dispatch, getState) => {
+export const addMessageFromRobot = (chatId, message, style) => (dispatch) => {
   dispatch(addMessage(chatId, message, style))
   const botMessage = "Thank you for the message!"
   const setStyle = "Robot"
