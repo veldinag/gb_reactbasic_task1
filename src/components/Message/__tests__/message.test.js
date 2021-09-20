@@ -1,5 +1,6 @@
 import Message from "../Message";
 import {render} from "@testing-library/react";
+import React from "react";
 
 it('matches snapshot with props', () => {
    const message = {
